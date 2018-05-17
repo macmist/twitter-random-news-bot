@@ -1,6 +1,17 @@
 import feedparser
 import random
 import shlex
+from rss_urls import *
+
+
+def pick_random(array):
+    res = []
+    for i in range(0, 2):
+        choice = random.choice(array)
+        array.remove(choice)
+        res.append(choice)
+        print(i)
+    return res
 
 
 def get_entries(url):
@@ -33,4 +44,11 @@ def half_string(content, first_half):
     return ' '.join(half)
 
 
-
+def randomize():
+    urls = pick_random(feed_urls)
+    entries = []
+    print(urls)
+    for url in urls:
+        entries.append(get_entries(url))
+    print(entries)
+    return random_title(entries[0], entries[1])
