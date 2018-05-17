@@ -5,6 +5,7 @@ import shlex
 
 def get_entries(url):
     feed = feedparser.parse(url)
+    print(feed)
     entries = feed["items"]
     return entries
 
@@ -23,8 +24,13 @@ def random_title(entries1, entries2):
 
 
 def half_string(content, first_half):
-    mylist = shlex.split(content.encode('utf8'), False, False)
-    cut = len(mylist) / 2
+    try:
+        content = content.decode('utf-8')
+    except AttributeError:
+        pass
+    mylist = shlex.split(content, False, False)
+    cut = len(mylist) // 2
+    print(cut)
     half = mylist[0:cut] if first_half else mylist[cut:]
     return ' '.join(half)
 

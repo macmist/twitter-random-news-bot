@@ -4,6 +4,7 @@ This is a simple bot* that generates a news title based on news title
 taken randomly from the internet
 
 Usage:
+- pip install feedparser tweepy
 - Add your credentials in credentials.py
 - python tweet.py
 
