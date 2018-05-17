@@ -5,7 +5,6 @@ import shlex
 
 def get_entries(url):
     feed = feedparser.parse(url)
-    print(feed)
     entries = feed["items"]
     return entries
 
@@ -30,7 +29,6 @@ def half_string(content, first_half):
         pass
     mylist = shlex.split(content, False, False)
     cut = len(mylist) // 2
-    print(cut)
     half = mylist[0:cut] if first_half else mylist[cut:]
     return ' '.join(half)
 
