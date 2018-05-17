@@ -6,11 +6,11 @@ from rss_urls import *
 
 def pick_random(array):
     res = []
+    newArr = list(array)
     for i in range(0, 2):
-        choice = random.choice(array)
-        array.remove(choice)
+        choice = random.choice(newArr)
+        newArr.remove(choice)
         res.append(choice)
-        print(i)
     return res
 
 
@@ -47,8 +47,6 @@ def half_string(content, first_half):
 def randomize():
     urls = pick_random(feed_urls)
     entries = []
-    print(urls)
     for url in urls:
         entries.append(get_entries(url))
-    print(entries)
     return random_title(entries[0], entries[1])
