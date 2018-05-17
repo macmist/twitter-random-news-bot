@@ -55,3 +55,4 @@ staticfiles
 .env
 
 
+credentials.py
