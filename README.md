@@ -55,13 +55,14 @@ Examples of what you can do:
             ]
         }
     ---
+    
 3. mixup -> will take two items randomly, if it's a link, it'll take it, if it's a list, it'll take a random item inside
     
     ---
-        
+       
         feed_urls = {
             1: "url-1",
-            2: "url-2"
+            2: "url-2",
             ...,
             # theme
             n: [
@@ -71,18 +72,17 @@ Examples of what you can do:
         }
     ---
     
-4. mandatory -> if you want to always pick one same theme/url,
-just give it the "mandatory" key (will only work for one)
+4. mandatory -> if you want to always pick one same theme/url,just give it the "mandatory" key (will only work for one) 
 
     ---
-    feed_urls = {
-            "mandatory: "url-1",  # mandatory field, will always be picked
-            2: "url-2"
-            ...,
-            # theme
-            n: [
-                "url-1-theme",
-                "url-2-theme"
-            ]
-        }
+        feed_urls = {
+                "mandatory": "url-1",  # mandatory field, will always be picked
+                2: "url-2"
+                ...,
+                # theme
+                n: [
+                    "url-1-theme",
+                    "url-2-theme"
+                ]
+            }
     ---
