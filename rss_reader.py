@@ -14,7 +14,6 @@ def pick_randoms(dictionary):
         del new_dict[choice]
     # shuffle so the mandatory does not always take the first position
     random.shuffle(res)
-    print(res)
     return res
 
 
