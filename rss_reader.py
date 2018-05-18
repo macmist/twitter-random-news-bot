@@ -4,20 +4,28 @@ import shlex
 from rss_urls import *
 
 
-def pick_randoms(array):
+def pick_randoms(dictionary):
     res = []
-    newArr = list(array)
+    new_dict = dict(dictionary)
+
     for i in range(0, 2):
-        choice = random.choice(newArr)
-        if type(choice) is list:
-            nested_choice = random.choice(choice)
-            choice.remove(nested_choice)
-            res.append(nested_choice)
-        else:
-            res.append(choice)
-        newArr.remove(choice)
+        choice = 'mandatory' if 'mandatory' in new_dict else random.choice(list(new_dict))
+        res.append(pick_random_helper(new_dict[choice]))
+        del new_dict[choice]
+    # shuffle so the mandatory does not always take the first position
+    random.shuffle(res)
+    print(res)
     return res
 
+
+# determine whether the object is a link or a theme and return one link
+def pick_random_helper(item):
+    if type(item) is list:
+        nested_choice = random.choice(item)
+        item.remove(nested_choice)
+        return nested_choice
+    else:
+        return item
 
 def get_entries(url):
     feed = feedparser.parse(url)
