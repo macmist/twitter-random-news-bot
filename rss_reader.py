@@ -4,13 +4,18 @@ import shlex
 from rss_urls import *
 
 
-def pick_random(array):
+def pick_randoms(array):
     res = []
     newArr = list(array)
     for i in range(0, 2):
         choice = random.choice(newArr)
+        if type(choice) is list:
+            nested_choice = random.choice(choice)
+            choice.remove(nested_choice)
+            res.append(nested_choice)
+        else:
+            res.append(choice)
         newArr.remove(choice)
-        res.append(choice)
     return res
 
 
@@ -45,7 +50,7 @@ def half_string(content, first_half):
 
 
 def randomize():
-    urls = pick_random(feed_urls)
+    urls = pick_randoms(feed_urls)
     entries = []
     for url in urls:
         entries.append(get_entries(url))
