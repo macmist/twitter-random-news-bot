@@ -1,13 +1,14 @@
 import feedparser
 import random
 import shlex
+import copy
 from rss_urls import *
+from articles import *
 
 
 def pick_randoms(dictionary):
     res = []
-    new_dict = dict(dictionary)
-
+    new_dict = copy.deepcopy(dictionary)
     for i in range(0, 2):
         choice = 'mandatory' if 'mandatory' in new_dict else random.choice(list(new_dict))
         res.append(pick_random_helper(new_dict[choice]))
@@ -26,6 +27,7 @@ def pick_random_helper(item):
     else:
         return item
 
+
 def get_entries(url):
     feed = feedparser.parse(url)
     entries = feed["items"]
@@ -42,7 +44,15 @@ def random_title(entries1, entries2):
     t2 = random.choice(entries2)
     h1 = half_string(t1["title"], True)
     h2 = half_string(t2["title"], False)
-    return h1 + " " + h2
+
+    if h1[-1].lower() in articles and h2[0].lower() in articles:
+        print(h1)
+        h1 = h1[:-1]
+        print(h1)
+    h = h1 + h2
+    res = " ".join(h)
+    res = res.replace(": : ", ": ")
+    return res
 
 
 def half_string(content, first_half):
@@ -50,10 +60,15 @@ def half_string(content, first_half):
         content = content.decode('utf-8')
     except AttributeError:
         pass
+    content = content.replace('« ', '"')
+    content = content.replace(' »', '"')
+    if ':' in content:
+        l = content.rpartition(':')
+        return (l[0] + ':').strip().split(' ') if first_half else l[2].strip().split(' ')
     mylist = shlex.split(content, False, False)
     cut = len(mylist) // 2
     half = mylist[0:cut] if first_half else mylist[cut:]
-    return ' '.join(half)
+    return half
 
 
 def randomize():
@@ -62,3 +77,4 @@ def randomize():
     for url in urls:
         entries.append(get_entries(url))
     return random_title(entries[0], entries[1])
+
