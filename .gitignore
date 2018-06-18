@@ -56,3 +56,4 @@ staticfiles
 
 
 credentials.py
+.pytest_cache

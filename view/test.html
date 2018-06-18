@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./view.css">
+</head>
+<body bgcolor="#00ff00">
+
+
+    <script   src="https://code.jquery.com/jquery-3.3.1.js"   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="   crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/jquery.marquee@1.5.0/jquery.marquee.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        var xhttp = new XMLHttpRequest();
+        var $mq;
+        var finishCount = 0;
+
+        function UserAction() {
+            xhttp.open("GET", "http://localhost:5000/", true);
+            xhttp.send();
+
+            xhttp.addEventListener("readystatechange", processRequest, false);
+        }
+
+        function processRequest(e) {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                var response = JSON.parse(xhttp.responseText);
+                var result = response.result;
+
+                $('#test').text(result);
+                $mq = $('#test').bind('finished', function() {
+                    finishCount++;
+                    if (finishCount === 3) {
+                        finishCount = 0;
+                        $(this).marquee('destroy');
+                        $('#test').text(' ');
+
+                        UserAction();
+                    }
+                    }).marquee({duration:time})
+            }
+        }
+
+        function get(name){
+           if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+              return decodeURIComponent(name[1]);
+        }
+
+
+    </script>
+
+    <script>
+    var time;
+    $(document).ready(function () {
+        UserAction();
+        time = get("time") * 1000 || 10000;
+    })
+    </script>
+    <div style="position: absolute; left: 0px; right: 10px; bottom: 65px; width: 100%; background-image: linear-gradient(to bottom, gray, black); height: 100px">
+        <p id="test" style="color: white; font-size: 2.5em; top: 50%; height: 100px; margin-top: -20px; position: absolute; width: 100%;"></p>​
+    </div>
+        <img src="./glomebag.png" class="gni" style="background-image: linear-gradient(to bottom right, red, white, blue); width:100%;max-width:300px; position: absolute; right: 10px; bottom: 10px">
+
+    <div style="position: absolute; left: 0px; width: 10px; bottom: 65px; height: 100px; background-color: #00ff00"></div>
+        <div style="position: absolute; right: 0px; width: 10px; bottom: 65px; height: 100px; background-color: #00ff00"></div>
+
+    <div style="position: absolute; left: 10px; bottom: 65px; width: 10px; background-image: linear-gradient(to bottom, gray, black); height: 100px">
+
+
+
+</body>
+</html>
+

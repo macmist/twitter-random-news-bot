@@ -13,6 +13,7 @@ api = tweepy.API(auth)
 
 
 try:
-    api.update_status(randomize() + " #GlomebagActu")
+    # api.update_status(randomize() + " #GlomebagActu")
+    print(randomize())
 except tweepy.TweepError as e:
     print(e.reason)
