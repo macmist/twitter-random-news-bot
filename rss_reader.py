@@ -5,23 +5,25 @@ import copy
 from rss_urls import *
 from articles import *
 
+r = random.Random()
+
 
 def pick_randoms(dictionary):
     res = []
     new_dict = copy.deepcopy(dictionary)
     for i in range(0, 2):
-        choice = 'mandatory' if 'mandatory' in new_dict else random.choice(list(new_dict))
+        choice = 'mandatory' if 'mandatory' in new_dict else r.choice(list(new_dict))
         res.append(pick_random_helper(new_dict[choice]))
         del new_dict[choice]
     # shuffle so the mandatory does not always take the first position
-    random.shuffle(res)
+    r.shuffle(res)
     return res
 
 
 # determine whether the object is a link or a theme and return one link
 def pick_random_helper(item):
     if type(item) is list:
-        nested_choice = random.choice(item)
+        nested_choice = r.choice(item)
         item.remove(nested_choice)
         return nested_choice
     else:
@@ -40,15 +42,13 @@ def print_titles(entries):
 
 
 def random_title(entries1, entries2):
-    t1 = random.choice(entries1)
-    t2 = random.choice(entries2)
+    t1 = r.choice(entries1)
+    t2 = r.choice(entries2)
     h1 = half_string(t1["title"], True)
     h2 = half_string(t2["title"], False)
 
     if h1[-1].lower() in articles and h2[0].lower() in articles:
-        print(h1)
         h1 = h1[:-1]
-        print(h1)
     h = h1 + h2
     res = " ".join(h)
     res = res.replace(": : ", ": ")
