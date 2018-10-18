@@ -18,4 +18,4 @@ def send_view(path):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=4242, host='0.0.0.0')
